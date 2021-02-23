@@ -1,5 +1,8 @@
 # Wrapper script for running GSEA via command line
 
+## Prerequisites
+* [GSEAv4.0.3 or higher](http://www.gsea-msigdb.org/gsea/downloads.jsp)
+
 ```bash
 python gseawrap.py --help
 usage: Wrapper for GSEA. [-h] [--gct GCT] [--cls CLS] [--gmt GMT]

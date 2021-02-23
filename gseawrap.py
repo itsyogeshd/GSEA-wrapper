@@ -29,7 +29,7 @@ def parse_arguments():
     parser.add_argument('--metric', type=str,default='Signal2Noise',choices=['Signal2Noise','tTest', 'log2_Ratio_of_Classes'], 
                         help='Gene ranking method to choose (If number of samples in each group is more than 3, choose "Signal2Noise") (If number of samples in each group is less than 3, choose either "tTest" or "log2_Ratio_of_Classes")')
     
-    parser.add_argument('--ispreranked',action='store_false', help='Analysis is preranked GSEA.')
+    parser.add_argument('--ispreranked',action='store_true', help='Analysis is preranked GSEA.')
     parser.add_argument('--rnk',nargs='*',type=str,required=False, help='Preranked genelist in .rnk format.') ## this is to take into account if one has to run pre rank gsea for multiple comparision. 
     parser.add_argument('--log-level', default='INFO',
                         choices=['NOTSET', 'DEBUG', 'INFO',
@@ -184,12 +184,12 @@ def main():
     
     args = parse_arguments()
     if args.ispreranked:
-        log.info('Running GSEA in normal mode...')
-        run_gsea(args.gct[0], args.cls[0], args.gmt[0], args.chip[0], args.projectname, args.metric, args.nplots, args.nperms)
-        
-    else:
         log.info('Running GSEA in preranked mode...')
         run_prerank_gsea(args.rnk, args.gmt[0], args.projectname, args.nplots, args.nperms)
+        
+    else:
+        log.info('Running GSEA in normal mode...')
+        run_gsea(args.gct[0], args.cls[0], args.gmt[0], args.chip[0], args.projectname, args.metric, args.nplots, args.nperms)
              
     log.info('All Done...')
 if __name__ == '__main__':

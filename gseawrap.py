@@ -131,7 +131,7 @@ def run_gsea(expression, class_, geneset, annotation, analysisName ,metric,nplot
         comp.append("#"+comparisonlist[i][0]+"_versus_"+comparisonlist[i][1])
         prefix.append(comparisonlist[i][0]+"_versus_"+comparisonlist[i][1])
     for val in range(len(comp)):
-        cmd1 = "/home/ydhungan/GSEA_4.0.3/gsea-cli.sh GSEA -res {} -cls {} -gmx {} -chip {} -collapse true -mode Max_probe -norm meandiv -nperm {} "
+        cmd1 = "GSEA_4.0.3/gsea-cli.sh GSEA -res {} -cls {} -gmx {} -chip {} -collapse true -mode Max_probe -norm meandiv -nperm {} "
         cmd1 += "-permute gene_set -rnd_type no_balance -scoring_scheme weighted -rpt_label {} "
         cmd1 += "-metric {} -sort real -order descending -include_only_symbols true -make_sets true "
         cmd1 += "-median false -num 100 -plot_top_x {} -rnd_seed timestamp -save_rnd_lists false "
@@ -159,7 +159,7 @@ def run_prerank_gsea(ranklist, geneset, analysisName, nplots, nperm):
         head, tail = os.path.split(ranklist[0])
         prefix = strip_ext_rnk(tail)
         result_dir = head + '/' + prefix + '_' + analysisName+ '_' + d1 
-        cmd1 = "/home/ydhungan/GSEA_4.0.3/gsea-cli.sh GSEAPreranked -rnk {} -gmx {} -nperm {} -scoring_scheme weighted " 
+        cmd1 = "GSEA_4.0.3/gsea-cli.sh GSEAPreranked -rnk {} -gmx {} -nperm {} -scoring_scheme weighted " 
         cmd1 += "-set_max 500 -set_min 15 -plot_top_x {} -rnd_seed timestamp -zip_report false -rpt_label {} "
         cmd1 += "-out {} -norm meandiv "
         cmd1 = cmd1.format(ranklist[0], geneset, nperm, nplots, prefix, result_dir)
@@ -169,7 +169,7 @@ def run_prerank_gsea(ranklist, geneset, analysisName, nplots, nperm):
             head, tail = os.path.split(ranklist[file])
             prefix = strip_ext_rnk(tail)
             result_dir = head + '/' + prefix + '_' + analysisName + '_' +  d1
-            cmd1 = "/home/ydhungan/GSEA_4.0.3/gsea-cli.sh GSEAPreranked -rnk {} -gmx {} -nperm {} -scoring_scheme weighted " 
+            cmd1 = "GSEA_4.0.3/gsea-cli.sh GSEAPreranked -rnk {} -gmx {} -nperm {} -scoring_scheme weighted " 
             cmd1 += "-set_max 500 -set_min 15 -plot_top_x {} -rnd_seed timestamp -zip_report false -rpt_label {} "
             cmd1 += "-out {} -norm meandiv "
             cmd1 = cmd1.format(ranklist[file], geneset, nperm, nplots, prefix, result_dir)
@@ -183,9 +183,6 @@ def main():
     log.info('Parsing arguments and making Project directories...')
     
     args = parse_arguments()
-    print(args)
-    #cmd = 'module load java/openjdk-11'   
-    #os.system(cmd)
     if args.ispreranked:
         log.info('Running GSEA in normal mode...')
         run_gsea(args.gct[0], args.cls[0], args.gmt[0], args.chip[0], args.projectname, args.metric, args.nplots, args.nperms)
